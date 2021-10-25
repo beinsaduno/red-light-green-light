@@ -2,8 +2,7 @@ import games.RedLightGreenLight;
 
 import java.util.Scanner;
 
-import static games.RedLightGreenLight.printSeparatingLine;
-import static games.RedLightGreenLight.printingMessage;
+import static games.RedLightGreenLight.*;
 
 public class SquidGameJava {
     private static int gameNo;
@@ -12,13 +11,12 @@ public class SquidGameJava {
         Scanner scanner = new Scanner(System.in);
 
         printSeparatingLine();
-        printingMessage("""
-                Starting Squid Game. Please, Select A Game To Play:
-                Red Light / Green Light -> Enter Digit > 1
-                Exit Game -> Enter Number > 456
-                Please, Enter Your Choice:
-                """, 100);
+        printingMessage("Starting Squid Game. Please, Select A Game To Play:\n\n" +
+                printRedLight() + " / " + printGreenLight() + " -> Enter Digit > " + printColourfulLetters("1", "purple") + "\n" +
+                printColourfulLetters("Exit Game", "blue") + " -> Enter Number > " + printColourfulLetters("456", "purple") + "\n" +
+                "Please, Enter Your Choice:\n", 75);
         System.out.print(">");
+
 
         try {
             do {
@@ -53,7 +51,7 @@ public class SquidGameJava {
     }
 
     private static void errorMessage() {
-        printingMessage("Please, Insert Valid Input\n" +
-                ">", 75);
+        System.out.print(printColourfulBackground("Invalid Input", "red") +
+                "\n>");
     }
 }
