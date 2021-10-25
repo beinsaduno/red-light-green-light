@@ -12,8 +12,10 @@ public class SquidGameJava {
 
         printSeparatingLine();
         printingMessage("Starting Squid Game. Please, Select A Game To Play:\n\n" +
-                printRedLight() + " / " + printGreenLight() + " -> Enter Digit > " + printColourfulLetters("1", "purple") + "\n" +
-                printColourfulLetters("Exit Game", "blue") + " -> Enter Number > " + printColourfulLetters("456", "purple") + "\n" +
+                printRedLight() + " / " + printGreenLight() + " -> Enter Digit > "
+                + printColourfulLetters("1", "purple") + "\n" +
+                printColourfulLetters("Exit Game", "blue") + " -> Enter Number > "
+                + printColourfulLetters("456", "purple") + "\n" +
                 "Please, Enter Your Choice:\n", 75);
         System.out.print(">");
 
