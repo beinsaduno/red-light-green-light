@@ -13,6 +13,7 @@ public class RedLightGreenLight implements SquidGame {
     private static final String YELLOW_BRIGHT = "\033[0;93m";
     private static final String BLUE_BRIGHT = "\033[0;94m";
     private static final String PURPLE_BRIGHT = "\033[0;95m";
+    private static final String CYAN_BRIGHT = "\033[0;96m";
     private static final String RED_BACKGROUND = "\033[41m";
     private static final String GREEN_BACKGROUND = "\033[42m";
     private static final String YELLOW_BACKGROUND = "\033[43m";
@@ -23,11 +24,10 @@ public class RedLightGreenLight implements SquidGame {
     private static final String RED_LIGHT = printRedLight();
     private static final String GAME_OVER = RED_BACKGROUND + BLACK_BOLD_BRIGHT + "Game Over 🤯🔫" + RESET;
 
-    private static final int TIME_LIMIT = 1000 * 60; //  1 Minute
+    private static final int TIME_LIMIT = 1000 * 60;
     private static final int BREATHER = 500;
     private static final int GREEN_LIGHT_MAX_TIME = 4000;
 
-    // game variables
     private static int pressCount = 0;
     private static int gameCounter = 0;
     private static final String[] timer = {"3", "2", "1"};
@@ -49,15 +49,19 @@ public class RedLightGreenLight implements SquidGame {
         scanner = new Scanner(System.in);
         boolean continuePlaying;
         do {
-            // resetting variables
             pressCount = 0;
             gameOver = false;
 
             printSeparatingLine();
             if (gameCounter == 0) {
-                String message = "Starting The Squid Game #1: " + RED_LIGHT + " / " + GREEN_LIGHT + "\n" +
+                String message = "Starting The Squid Game : " + RED_LIGHT + " / " + GREEN_LIGHT + "\n" +
                         "When " + GREEN_LIGHT + " Is On, Please, Press The Enter Key Continuously.\n" +
-                        "Stop Pressing Once You See " + RED_LIGHT + ".\n";
+                        "Stop Pressing Once You See " + RED_LIGHT + ".\n" +
+                        "Score A Minimum Of "
+                        + printColourfulLetters("100", "cyan")
+                        + " " + printColourfulLetters("Points", "blue") + " Within "
+                        + printColourfulLetters("1", "cyan")
+                        + " " + printColourfulLetters("Minute", "blue") + " To Stay Alive.\n";
                 printingMessage(message, 75);
                 System.out.println();
             }
@@ -69,11 +73,9 @@ public class RedLightGreenLight implements SquidGame {
             Thread frontMan = new Thread(RedLightGreenLight::frontMan);
             Thread player = new Thread(RedLightGreenLight::player);
 
-            // Starting the threads
             frontMan.start();
             player.start();
 
-            // waiting threads to finish
             frontMan.join();
             player.join();
 
@@ -89,11 +91,12 @@ public class RedLightGreenLight implements SquidGame {
                 System.exit(0);
             }
             continuePlaying = next.equalsIgnoreCase("Y");
-        } while (continuePlaying); // if pressed Y, restart the game
+        } while (continuePlaying);
     }
 
     private String keepPlayingQuestion() {
-        return "Do You Want To Keep Playing?: [" + printColourfulLetters("Y", "green") + "/" + printColourfulLetters("N", "red") + "] : ";
+        return "Do You Want To Keep Playing?: [" + printColourfulLetters("Y", "green")
+                + "/" + printColourfulLetters("N", "red") + "] : ";
     }
 
     public static String printColourfulLetters(String text, String color) {
@@ -103,6 +106,7 @@ public class RedLightGreenLight implements SquidGame {
             case "yellow" -> color = YELLOW_BRIGHT;
             case "blue" -> color = BLUE_BRIGHT;
             case "purple" -> color = PURPLE_BRIGHT;
+            case "cyan" -> color = CYAN_BRIGHT;
             default -> throw new IllegalArgumentException("Invalid Color");
         }
         return color + text + RESET;
@@ -137,28 +141,22 @@ public class RedLightGreenLight implements SquidGame {
         int timeRemain = TIME_LIMIT;
         Random random = new Random();
         do {
-            // calculate time for "Mugunghwa Kkoci Pieot Seumnida"
             int dollCountingTime = random.nextInt(Math.min(timeRemain, GREEN_LIGHT_MAX_TIME));
-            System.out.printf("%s Remaining Time: %d Seconds (Current Score %d): %n", GREEN_LIGHT, timeRemain / 1000, pressCount);
+            System.out.printf(
+                    "%s Remaining Time: %d Seconds (Current Score %d): %n", GREEN_LIGHT, timeRemain / 1000, pressCount);
             System.out.println();
 
-            // countdown the timer
             timeRemain -= dollCountingTime;
 
-            // doll 👧 is now chanting "Mugunghwa Kkoci Pieot Seumnida"
             sleep(dollCountingTime);
 
-            // Stop pressing enter now
             System.out.println(RED_LIGHT);
-
-            // The Doll is now scanning for players' movement, Don't Move
 
             int lastPressedInGreenLight = pressCount;
             int scanningForMovements = random.nextInt(2000) + BREATHER;
-            sleep(scanningForMovements); // Scanning for any movement
+            sleep(scanningForMovements);
             timeRemain -= scanningForMovements;
 
-            // IF player has moved (pressed enter in Red light time) game is over
             if (pressCount != lastPressedInGreenLight) {
                 gameOver = true;
                 pressCount = lastPressedInGreenLight;
@@ -192,7 +190,6 @@ public class RedLightGreenLight implements SquidGame {
     }
 
     private static void player() {
-        // keep on reading Enter until game is over
         while (!gameOver) {
             scanner.nextLine();
             pressCount++;
