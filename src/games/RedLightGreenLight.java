@@ -165,15 +165,16 @@ public class RedLightGreenLight implements SquidGame {
                 break;
             }
         } while (timeRemain >= 0);
-        if (timeRemain <= 0 && 0 <= pressCount) {
+        if (timeRemain <= 0 && 100 <= pressCount) {
             printSeparatingLine();
             printingMessage(printColourfulBackground("Congratulations Number 456!", "green") + "\n" +
                     printColourfulBackground("You Are Still ALive!", "green") + "\n" +
-                    printColourfulBackground("Get Ready For The Next Game!", "green\n"), 75);
+                    printColourfulBackground("Get Ready For The Next Game!", "green"), 75);
+            System.out.println();
             printSeparatingLine();
             System.exit(0);
         } else {
-            System.out.println(GAME_OVER + "\nYour Score Is: " + pressCount + ".\n" +
+            System.out.print(GAME_OVER + "\nYour Score Is: " + pressCount + ".\n" +
                     "Please, Press Enter Key To Continue.");
         }
     }
