@@ -3,4 +3,4 @@
 <br>
 <br>
 
-![GamePlay 1](https://media.giphy.com/media/S21V1eLqE9JZKwtf20/giphy.gif)
+![GamePlay 1](https://media.giphy.com/media/eLotC5ZcYLikOxxnb0/giphy.gif)
