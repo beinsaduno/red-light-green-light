@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 public class Util {
     public static void sleep(int time) {

@@ -3,7 +3,7 @@ package games;
 import java.util.Random;
 import java.util.Scanner;
 
-import static Util.Util.sleep;
+import static util.Util.sleep;
 
 public class RedLightGreenLight implements SquidGame {
     private static final String RESET = "\033[0m";
